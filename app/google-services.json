@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "803162645142",
+    "project_id": "reflejos-36500",
+    "storage_bucket": "reflejos-36500.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803162645142:android:5917662634984e42e898b7",
+        "android_client_info": {
+          "package_name": "com.example.reflejos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbFxPMQ9IZ_wgPcB4ZVcv-WofQxAWeSPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
