@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Reflejos</string>
+    <string name="login_hint_email">Email</string>
+    <string name="login_hint_password">Contraseña</string>
+    <string name="login_sign_up_button">Registrarse</string>
+    <string name="login_login_in_button">Acceder</string>
 </resources>
