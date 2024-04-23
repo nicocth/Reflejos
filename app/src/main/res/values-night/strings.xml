@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Reflejos</string>
     <string name="login_hint_email">Email</string>
     <string name="login_hint_password">Contraseña</string>
     <string name="login_sign_up_button">Registrarse</string>
     <string name="login_login_in_button">Acceder</string>
-    <string name="main_training_button">Entrenamientos</string>
+    <string name="main_training_button">Entrenamiento</string>
     <string name="main_record_button">Historial</string>
     <string name="main_create_training_button">Crear entrenamiento</string>
     <string name="main_devices_button">Dispositivos</string>
