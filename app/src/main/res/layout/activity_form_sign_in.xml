@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/form_sign_in_email_label"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="110dp"
         android:layout_marginStart="40dp"
         android:textSize="18sp"
         android:textColor="@color/black"
@@ -106,9 +106,19 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:layout_marginTop="40sp"
+        android:layout_marginTop="60sp"
         android:textColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/comebackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="Volver atrás"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

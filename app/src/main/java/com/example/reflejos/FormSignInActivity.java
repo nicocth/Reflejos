@@ -21,7 +21,7 @@ public class FormSignInActivity extends AppCompatActivity {
     //declaración de elementos de la vista
     private TextView errorTextView;
     private EditText emailEditText, passwordEditText, passwordConfirmationEditText;
-    private Button signUpButton;
+    private Button signUpButton, comebackButton;
 
     //declaración del módulo Authentification de firebase
     private FirebaseAuth mAuth;
@@ -36,6 +36,7 @@ public class FormSignInActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         passwordConfirmationEditText = findViewById(R.id.passwordConfirmationEditText);
         signUpButton = findViewById(R.id.signUpButton);
+        comebackButton = findViewById(R.id.comebackButton);
 
         //inicializamos clase de autentificacion firebase
         mAuth = FirebaseAuth.getInstance();
@@ -45,7 +46,17 @@ public class FormSignInActivity extends AppCompatActivity {
     }
 
     private void setup() {
+        //cambiamos el titulo de la actividad
         setTitle(getString(R.string.form_sign_up_title));
+        //configuramos boton volver atrás
+        comebackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FormSignInActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+        //configuramos boton Registrase
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
