@@ -9,4 +9,10 @@
     <string name="main_create_training_button">Crear entrenamiento</string>
     <string name="main_devices_button">Dispositivos</string>
     <string name="sign_out_button">CERRAR SESION</string>
+    <string name="form_sign_up_title">Registro</string>
+    <string name="form_sign_in_hint_password">Contraseña</string>
+    <string name="form_sign_in_hint_password_confirmation">Confirmar contraseña</string>
+    <string name="form_sign_in_email_label">Introducir email válido</string>
+    <string name="form_sign_in_password_label">Introducir contraseña</string>
+    <string name="form_sign_in_password_confirmation_label">Introduce nuevamente la contraseña</string>
 </resources>
