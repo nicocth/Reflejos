@@ -7,42 +7,10 @@
     android:backgroundTint="@color/white"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/emailTextView"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="20dp"
-        android:text="email usuario"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userTypeTextView" />
-
-    <TextView
-        android:id="@+id/userTypeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="cliente:"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/signOutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/white"
-        android:text="@string/sign_out_button"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include layout="@layout/header_layout"
+        android:id="@+id/reusableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/trainingButton"
@@ -89,7 +57,7 @@
         android:id="@+id/helpButton"
         android:layout_width="320dp"
         android:layout_height="80dp"
-        android:text="@string/main_devices_button"
+        android:text="Ayuda"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/devicesButton"
