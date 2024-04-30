@@ -15,4 +15,8 @@
     <string name="form_sign_in_email_label">Introducir email válido</string>
     <string name="form_sign_in_password_label">Introducir contraseña</string>
     <string name="form_sign_in_password_confirmation_label">Introduce nuevamente la contraseña</string>
+    <string name="form_sign_in_name">Nombre y apellidos:</string>
+    <string name="form_sign_in_address">Dirección:</string>
+    <string name="form_sign_in_zip_code">Código postal:</string>
+    <string name="form_sign_in_trainer_switch">Registrarse como Entrenador</string>
 </resources>
