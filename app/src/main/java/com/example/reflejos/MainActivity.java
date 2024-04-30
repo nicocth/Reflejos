@@ -1,15 +1,12 @@
 package com.example.reflejos;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,13 +32,20 @@ public class MainActivity extends AppCompatActivity {
         createTrainingButton = findViewById(R.id.createTrainingButton);
         devicesButton = findViewById(R.id.devicesButton);
         helpButton = findViewById(R.id.helpButton);
+    }
 
+
+    private void inicializarCabecera() {
         //inicializamos clase de autentificacion firebase
         mAuth = FirebaseAuth.getInstance();
 
+        //inicializamos elementos de la vista
+        signOutButton = findViewById(R.id.signOutButton);
+        emailTextView = findViewById(R.id.emailTextView);
+        userTypeTextView = findViewById(R.id.userTypeTextView);
+
         //Configuramos informacion de usuario
         emailTextView.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail());
-
 
         //Configuramos boton Cerrar sesión
         signOutButton.setOnClickListener(new View.OnClickListener() {
@@ -93,4 +97,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
