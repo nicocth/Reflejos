@@ -113,6 +113,7 @@ public class FormSignInActivity extends AppCompatActivity {
         });
     }
 
+
     /**
      * Método que hace añade en firebase, si lo logra nos lleva a la actividad principal con esa sesion iniciada.
      * si no lo logra muestra error.
