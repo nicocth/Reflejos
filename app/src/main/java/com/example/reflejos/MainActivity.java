@@ -7,16 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         configurarBotones();
     }
 
+
     private void inicializarCabecera() {
         //inicializamos clase de autentificacion firebase
         mAuth = FirebaseAuth.getInstance();
@@ -63,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Obtenemos email del usuario
         String emailUser = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+
         //Configuramos informacion de usuario
         emailTextView.setText(emailUser);
 
