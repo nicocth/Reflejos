@@ -2,7 +2,6 @@ package com.example.reflejos;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,7 +19,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +32,9 @@ public class FormSignInActivity extends AppCompatActivity {
 
     //declaración del módulo Authentification de firebase
     private FirebaseAuth mAuth;
+
     private FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +54,7 @@ public class FormSignInActivity extends AppCompatActivity {
 
         //inicializamos clase de autentificacion firebase
         mAuth = FirebaseAuth.getInstance();
+
         //inicializamos clase de firestore
         db = FirebaseFirestore.getInstance();
 
@@ -93,9 +93,11 @@ public class FormSignInActivity extends AppCompatActivity {
                 String emailUser = emailEditText.getText().toString().trim();
                 String passwordUser = passwordEditText.getText().toString().trim();
                 String passwordComfirmationUser = passwordConfirmationEditText.getText().toString().trim();
+              
                 //Comprobamos si ha sido introducido texto en todos los campos
                 if(nameUser.isEmpty() || addressUser.isEmpty() || zipCodeUser.isEmpty() ||
                         emailUser.isEmpty() || passwordUser.isEmpty() || passwordComfirmationUser.isEmpty()){
+
                     //Si no se ha introducido texto en alguno de los dos campos se muestra error
                     Toast.makeText(FormSignInActivity.this,
                             "Hay campos sin rellenar.", Toast.LENGTH_SHORT).show();
@@ -104,6 +106,7 @@ public class FormSignInActivity extends AppCompatActivity {
                     if(passwordUser.equals(passwordComfirmationUser)){
                         //si es correcto llamamos al metodo de registrar usuario
                         signInUser(nameUser, addressUser, zipCodeUser, userIsTrainer, emailUser, passwordUser);
+
                     }else{
                         //Si no coincide la contraseña con su confirmacion se muestra error
                         Toast.makeText(FormSignInActivity.this,
@@ -114,7 +117,6 @@ public class FormSignInActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * Método que hace añade en firebase, si lo logra nos lleva a la actividad principal con esa sesion iniciada.
      * si no lo logra muestra error.
@@ -122,6 +124,7 @@ public class FormSignInActivity extends AppCompatActivity {
      * @param passwordUser
      */
     private void signInUser(String nameUser, String  addressUser, String  zipCodeUser, String userIsTrainer, String emailUser, String passwordUser) {
+
         mAuth.createUserWithEmailAndPassword(emailUser, passwordUser)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -129,6 +132,7 @@ public class FormSignInActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         //si no hay errores volvemos al login
                         startActivity(new Intent(FormSignInActivity.this, LoginActivity.class));
+
                         // Añade un nuevo documento con el email del usuario
                         Map<String, Object> user = new HashMap<>();
                         user.put("name", nameUser);
@@ -149,6 +153,7 @@ public class FormSignInActivity extends AppCompatActivity {
                                         Log.w("FIRESTORE", "Error writing document", e);
                                     }
                                 });
+
                         finish();
                     } else {
                         if (task.getException().getMessage() != null){
