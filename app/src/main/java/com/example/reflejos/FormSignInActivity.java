@@ -94,7 +94,8 @@ public class FormSignInActivity extends AppCompatActivity {
                 String passwordUser = passwordEditText.getText().toString().trim();
                 String passwordComfirmationUser = passwordConfirmationEditText.getText().toString().trim();
                 //Comprobamos si ha sido introducido texto en todos los campos
-                if(emailUser.isEmpty() || passwordUser.isEmpty() || passwordComfirmationUser.isEmpty()){
+                if(nameUser.isEmpty() || addressUser.isEmpty() || zipCodeUser.isEmpty() ||
+                        emailUser.isEmpty() || passwordUser.isEmpty() || passwordComfirmationUser.isEmpty()){
                     //Si no se ha introducido texto en alguno de los dos campos se muestra error
                     Toast.makeText(FormSignInActivity.this,
                             "Hay campos sin rellenar.", Toast.LENGTH_SHORT).show();
