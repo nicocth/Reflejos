@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class RunTrainingActivity extends AppCompatActivity {
@@ -37,8 +38,10 @@ public class RunTrainingActivity extends AppCompatActivity {
     private Button buttonLight;
     private CountDownTimer countDownTimer;
     private boolean temporizadorFuncionando;
-    private long tiempoRestante = 10000; // Variable del tiempo en milisegundos (10") -> Tiene que obtener el valor de la base de datos
+    private long tiempoEstablecido = 1000; // Variable del tiempo en milisegundos (10") -> Debe obtener su valor de la BD.Es el tiempo establecido por el entrenamiento
+    private long tiempoRestante = tiempoEstablecido; // Variable del tiempo utilizado por los métodos de la clase
     private int score = 0; // Variable de puntuación
+    private Date fechaHoraRegistro; // Variable para registrar la fecha y hora al terminar el entrenamiento
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,7 +166,21 @@ public class RunTrainingActivity extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
+                    // Cambiar el estado del temporizador a "no funcionando"
                     temporizadorFuncionando = false;
+                    // Obtener la fecha y hora actual
+                    fechaHoraRegistro = new Date();
+                    // Mostrar la fecha y hora en Logcat
+                    Log.d("[ FechaHoraReg ]", " -> La fecha y hora del registro es: " + fechaHoraRegistro.toString());
+                    // Mostrar la puntuación obtenida en Logcat
+                    Log.d("[ ScoreReg ]", " -> La puntuación del registro es: " + String.valueOf(score));
+                    // Restablecer el valor del tiempoRestante al tiempoEstablecido
+                    tiempoRestante = tiempoEstablecido;
+                    // Actualizar el texto del temporizador en la interfaz de usuario
+                    actualizarTextoTemporizador();
+                    // Poner a 0 la puntuación
+                    textViewScore.setText("0");
+                    score = 0;
                 }
             }.start();
 
@@ -177,15 +194,19 @@ public class RunTrainingActivity extends AppCompatActivity {
      * Este método tiene la función de detener y reiniciar el teporizador
      */
     private void stopTimer() {
-        countDownTimer.cancel();
-        // Cambiar estado del temporizador a "no funcionando"
-        temporizadorFuncionando = false;
-        tiempoRestante = 120000;
-        // Actualizar el texto del temporizador en la interfaz de usuario
-        actualizarTextoTemporizador();
-        // Poner a 0 la puntuación
-        textViewScore.setText("0");
-        score = 0;
+        // Solo si el temporizador se encuentra en funcionamiento
+        if (temporizadorFuncionando) {
+            countDownTimer.cancel();
+            // Cambiar estado del temporizador a "no funcionando"
+            temporizadorFuncionando = false;
+            // Restablecer el valor del tiempoRestante al tiempoEstablecido
+            tiempoRestante = tiempoEstablecido;
+            // Actualizar el texto del temporizador en la interfaz de usuario
+            actualizarTextoTemporizador();
+            // Poner a 0 la puntuación
+            textViewScore.setText("0");
+            score = 0;
+        }
     }
 
     /**
