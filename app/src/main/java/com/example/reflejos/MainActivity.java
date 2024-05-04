@@ -1,6 +1,8 @@
 package com.example.reflejos;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,15 +19,14 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    //declaración de los elementos de la vista
-    private Button trainingButton, recordButton, createTrainingButton;
-    private Button devicesButton, helpButton;
 
     //declaración del módulo Authentification de firebase
     private FirebaseAuth mAuth;
 
     //declaración del módulo Firestore
     private FirebaseFirestore db;
+
+    private boolean isTrainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         //inicializamos cabecera
         inicializarCabecera();
-
-        //inicializamos elementos del cuerpo de la vista
-        trainingButton = findViewById(R.id.trainingButton);
-        recordButton = findViewById(R.id.recordButton);
-        createTrainingButton = findViewById(R.id.createTrainingButton);
-        devicesButton = findViewById(R.id.devicesButton);
-        helpButton = findViewById(R.id.helpButton);
-
-        //Configuramos los botones
-        configurarBotones();
     }
-
 
     private void inicializarCabecera() {
         //inicializamos clase de autentificacion firebase
@@ -75,9 +65,12 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("FirestoreResult", "DocumentSnapshot data: " + document.getData());
                         if (document.get("isTrainer").toString().equals("true")){
                             userTypeTextView.setText("Entrenador:");
-                        }else{
+                            isTrainer = true;
+                        } else{
                             userTypeTextView.setText("Cliente:");
+                            isTrainer = false;
                         }
+                        cargarFragment();
 
                     } else {
                         Log.d("FirestoreResult", "No such document");
@@ -99,45 +92,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void configurarBotones() {
-        //Configuración de botón Entrenamientos
-        trainingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TrainingActivity.class));
-            }
-        });
-
-        //Configuración de botón Historial
-        recordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, RecordActivity.class));
-            }
-        });
-
-        //Configuración de botón Crear Entrenamiento
-        createTrainingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CreateTrainingActivity.class));
-            }
-        });
-
-        //Configuración de botón Dispositivos
-        devicesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, DevicesActivity.class));
-            }
-        });
-
-        //Configuración de botón Ayuda
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, HelpActivity.class));
-            }
-        });
+    private void cargarFragment(){
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        if (isTrainer) {
+            EntrenadorFragment entrenadorFragment = new EntrenadorFragment();
+            transaction.replace(R.id.fragmentContainer, entrenadorFragment);
+        } else {
+            ClienteFragment clienteFragment = new ClienteFragment();
+            transaction.replace(R.id.fragmentContainer, clienteFragment);
+        }
+        transaction.commit();
     }
 }

@@ -8,7 +8,7 @@
     tools:context=".TrainingActivity">
 
         <include layout="@layout/header_layout"
-            android:id="@+id/reusableLayout"
+            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -20,12 +20,12 @@
             android:textSize="24sp"
             android:background="@color/purple_500"
             android:textColor="#FFFFFF"
-            app:layout_constraintTop_toBottomOf="@id/reusableLayout"
+            app:layout_constraintTop_toBottomOf="@id/headerLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <ListView
-            android:id="@+id/trainingList"
+            android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="#CCCCCC"

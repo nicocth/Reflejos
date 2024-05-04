@@ -19,4 +19,7 @@
     <string name="form_sign_in_address">Dirección:</string>
     <string name="form_sign_in_zip_code">Código postal:</string>
     <string name="form_sign_in_trainer_switch">Registrarse como Entrenador</string>
+    <string name="main_help_button">Ayuda</string>
+    <string name="main_clients_button">Clientes</string>
+
 </resources>
