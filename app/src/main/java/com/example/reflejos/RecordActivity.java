@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Objects;
 
 public class RecordActivity extends AppCompatActivity {
@@ -37,10 +39,12 @@ public class RecordActivity extends AppCompatActivity {
 
     //declaramos array para inicializar la lista
     private ArrayList<ModeloLista> datos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+      
         //inicializamos la cabecera
         inicializarCabecera();
 

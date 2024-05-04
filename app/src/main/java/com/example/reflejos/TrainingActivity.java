@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Objects;
 
 public class TrainingActivity extends AppCompatActivity {
@@ -33,6 +35,7 @@ public class TrainingActivity extends AppCompatActivity {
 
     //declaramos array para inicializar la lista
     private ArrayList<ModeloLista> datos;
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,9 +174,3 @@ public class TrainingActivity extends AppCompatActivity {
                 });
     }
 }
-
-
-
-
-
-
