@@ -7,28 +7,48 @@
     tools:context=".EntrenadorFragment" >
 
     <Button
-        android:id="@+id/createTrainingButton"
+        android:id="@+id/trainingButton"
         android:layout_width="320dp"
         android:layout_height="80dp"
         android:layout_marginTop="60dp"
-        android:text="@string/main_create_training_button" />
+        android:text="@string/main_training_button"
+        android:layout_gravity="center"
+        android:background="@drawable/boton_redondo"/>
+
+    <Button
+        android:id="@+id/createTrainingButton"
+        android:layout_width="320dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/main_create_training_button"
+        android:layout_gravity="center"
+        android:background="@drawable/boton_redondo"/>
 
     <Button
         android:id="@+id/clientesButton"
         android:layout_width="320dp"
         android:layout_height="80dp"
-        android:text="@string/main_clients_button" />
+        android:layout_marginTop="10dp"
+        android:text="@string/main_clients_button"
+        android:layout_gravity="center"
+        android:background="@drawable/boton_redondo"/>
 
     <Button
         android:id="@+id/devicesButton"
         android:layout_width="320dp"
         android:layout_height="80dp"
-        android:text="@string/main_devices_button" />
+        android:layout_marginTop="10dp"
+        android:text="@string/main_devices_button"
+        android:layout_gravity="center"
+        android:background="@drawable/boton_redondo"/>
 
     <Button
         android:id="@+id/helpButton"
         android:layout_width="320dp"
         android:layout_height="80dp"
-        android:text="@string/main_help_button" />
+        android:layout_marginTop="10dp"
+        android:text="@string/main_help_button"
+        android:layout_gravity="center"
+        android:background="@drawable/boton_redondo"/>
 
 </LinearLayout>
