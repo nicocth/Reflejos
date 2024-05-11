@@ -8,11 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class RunTrainingActivity extends AppCompatActivity {
@@ -31,38 +28,49 @@ public class RunTrainingActivity extends AppCompatActivity {
     // Atributos de la clase
     private FirebaseAuth mAuth; // Módulo Authentification de firebase
     private FirebaseFirestore db; // Módulo Firestore
+    private TextView textTitleTraining; // Título del entrenamiento -> Se obtiene de la BD
     private TextView textViewTemporizador;
     private TextView textViewScore;
+    private TextView textSecuencia; // TextView con la secuencia de pulsación de luces -> Se obtiene de la BD
+    private int[] arraySecuencia; // Array para almacenar la secuencia de pulsación de luces -> Se obtiene de la BD
     private Button buttonStart;
     private Button buttonStop;
     private Button buttonLight;
     private CountDownTimer countDownTimer;
-    private boolean temporizadorFuncionando;
-    private long tiempoEstablecido = 1000; // Variable del tiempo en milisegundos (10") -> Debe obtener su valor de la BD.Es el tiempo establecido por el entrenamiento
-    private long tiempoRestante = tiempoEstablecido; // Variable del tiempo utilizado por los métodos de la clase
+    private String idEntrenamiento; // Atributo que obtiene el idEntrenamiento del Intent y corresponde con el id del documento de la BD
+    private boolean temporizadorFuncionando; // Variable conmutador para determinar el estado del temporizador
+    private long tiempoEstablecido; // Variable del tiempo en milisegundos (10") -> Debe obtener su valor de la BD.Es el tiempo establecido por el entrenamiento
+    private long tiempoRestante; // Variable del tiempo utilizado por los métodos de la clase
     private int score = 0; // Variable de puntuación
     private Date fechaHoraRegistro; // Variable para registrar la fecha y hora al terminar el entrenamiento
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_run_training);
 
-        /* [ ESTA PARTE DE CODIGO ES NUEVA DESDE EL UPDATE IGUANA. DESCONOZCO SU UTILIDAD ]
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-        */
+        // Inicializar cabecera
+        inicializarCabecera();
 
         // Inicializar elementos de la interfaz de usuario
+        textTitleTraining = findViewById(R.id.textTitleTraining);
         textViewTemporizador = findViewById(R.id.textViewTimer);
         textViewScore = findViewById(R.id.textViewScore);
+        textSecuencia = findViewById(R.id.textSecuence);
         buttonStart = findViewById(R.id.buttonStart);
         buttonStop = findViewById(R.id.buttonStop);
         buttonLight = findViewById(R.id.buttonLight);
+
+        // Obtener los datos recibidos desde la actividad anterior
+        Bundle bundle = getIntent().getExtras();
+
+        // Obtener el id del entrenamiento del intent
+        idEntrenamiento = bundle.getString("idEntrenamiento");
+
+        // Obtener datos del entrenaiento desde la BD
+        obtenerDatosEntrenamiento();
+
+        tiempoRestante = tiempoEstablecido;
 
         // Asignar listener del buttonStart
         buttonStart.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +102,7 @@ public class RunTrainingActivity extends AppCompatActivity {
 
     /**
      * Método inicializarCabecera()
-     * Carga los datos de Firebase
+     * Carga los datos de Firebase en la cabecera
      */
     private void inicializarCabecera() {
         //inicializamos clase de autentificacion firebase
@@ -143,6 +151,67 @@ public class RunTrainingActivity extends AppCompatActivity {
                 mAuth.signOut();
                 finish();
                 startActivity(new Intent(RunTrainingActivity.this, LoginActivity.class));
+            }
+        });
+    }
+
+    /**
+     * Método obtenerDatosEntrenamiento()
+     * Obtiene los datos del entrenamiento desde la BD, del documento referente al id obtenido mediante el Intent
+     */
+    private void obtenerDatosEntrenamiento() {
+        // Obtener email del usuario
+        String emailUser = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+        // Obtener referencia al documento específico
+        DocumentReference docRef = db.collection("usuarios")
+                .document(emailUser)
+                .collection("entrenamientos")
+                .document(idEntrenamiento);
+        // Obtener los datos del documento específico
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // Obtener el id del documento de la BD y mostrarlo en la interfaz de usuario como título del entrenamiento
+                        textTitleTraining.setText(document.getId());
+                        // Obtener el valor del campo "tiempo" del documento
+                        tiempoEstablecido = document.getLong("tiempo") * 1000;
+                        // Actualizar el tiempo restante con el valor obtenido
+                        tiempoRestante = tiempoEstablecido;
+                        // Actualizar el texto del temporizador en la interfaz de usuario
+                        actualizarTextoTemporizador();
+
+                        // Obtener el campo "secuencia" del documento
+                        List<Long> listaSecuenia = (List<Long>) document.get("secuencia");
+                        // Mientras haya valores el la lista de secuencia
+                        if (listaSecuenia != null) {
+                            // Inicializar atributo arraySecuencia
+                            arraySecuencia = new int[listaSecuenia.size()];
+                            // Crear un StringBuilder para mostrar la secuencia en el testView
+                            StringBuilder secuenciaSB = new StringBuilder();
+                            // Recorrer la lista de valores obtenidos del campo "secuencia"
+                            for (int i = 0; i < listaSecuenia.size(); i++) {
+                                // Almacenar valor en el atributo arraySecuencia
+                                arraySecuencia[i] = listaSecuenia.get(i).intValue();
+                                // Agregar el valor al StringBuilder
+                                secuenciaSB.append(arraySecuencia[i]);
+                                // Agregar un guión si no es el último valor
+                                if (i < listaSecuenia.size() - 1) {
+                                    secuenciaSB.append("-");
+                                }
+                            }
+                            // Establecer el texto en el textView textSecuencia
+                            textSecuencia.setText(secuenciaSB.toString());
+                        }
+
+                    } else {
+                        Log.d("Firebase Result", "No such document");
+                    }
+                } else {
+                    Log.d("Firebase Result", "get failed with ", task.getException());
+                }
             }
         });
     }
