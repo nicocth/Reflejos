@@ -162,8 +162,12 @@ public class TrainingActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(AdapterView<?> pariente, View view, int posicion, long id) {
                                     ModeloLista elegido=(ModeloLista)pariente.getItemAtPosition(posicion);
-                                    //extrae el texto de ese elemento
-                                    CharSequence textoelegido = "Seleccionado: " + elegido.get_texto1();
+                                    // Crear Intent para transicionar a la actividad RunTrainingActivity
+                                    Intent intent = new Intent(getApplicationContext(), RunTrainingActivity.class);
+                                    // Añadir datos extras al Intent -> textoTitulo = document.getId()
+                                    intent.putExtra("idEntrenamiento", elegido.get_textoTitulo());
+                                    // Iniciar la actividad definida en el Intent: RunTrainingActivity
+                                    startActivity(intent);
                                 }
                             });
 

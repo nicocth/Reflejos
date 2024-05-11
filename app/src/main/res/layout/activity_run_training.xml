@@ -25,20 +25,31 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
+        android:id="@+id/textTitleTraining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="TITULO ENTRENAMIENTO"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/runTrainingTitleTextView"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
         android:id="@+id/textTitleTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:text="Tiempo de entrenamiento:"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/runTrainingTitleTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textTitleTraining" />
 
     <TextView
         android:id="@+id/textViewTimer"
@@ -80,8 +91,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="50dp"
-        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
         android:textColor="@color/black"
         android:text="Puntuación:"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,5 +122,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewScore" />
+
+    <TextView
+        android:id="@+id/textTitleSecuence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:text="Secuencia de pulsaciones:"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLight" />
+
+    <TextView
+        android:id="@+id/textSecuence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:text="SECUENCIA"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTitleSecuence" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
