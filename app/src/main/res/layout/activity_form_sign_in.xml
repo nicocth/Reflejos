@@ -12,10 +12,12 @@
 
         <TextView
             android:id="@+id/errorTextView"
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:layout_marginTop="50dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="30dp"
             android:textColor="@color/red"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +27,7 @@
             android:id="@+id/comebackButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:background="@android:color/transparent"
             android:text="Volver atrás"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,13 +37,12 @@
             android:id="@+id/nameLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="110dp"
             android:layout_marginStart="40dp"
             android:text="@string/form_sign_in_name"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/errorTextView"/>
 
         <EditText
             android:id="@+id/nameEditText"
@@ -83,43 +84,51 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
 
-        <TextView
-            android:id="@+id/zipCodeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="40dp"
-            android:text="@string/form_sign_in_zip_code"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addressEditText" />
-
-        <EditText
-            android:id="@+id/zipCodeEditText"
+        <LinearLayout
+            android:id="@+id/horizontal_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="250dp"
-            android:ems="10"
-            android:inputType="text"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/zipCodeTextView" />
-
-        <Switch
-            android:id="@+id/isTrainerSwitch"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginTop="20dp"
+            android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:minHeight="48dp"
-            android:textSize="18sp"
-            android:text="@string/form_sign_in_trainer_switch"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addressEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/addressEditText">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/zipCodeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/form_sign_in_zip_code"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/zipCodeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="20dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:minHeight="48dp"/>
+
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/isTrainerSwitch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="48dp"
+                android:textSize="18sp"
+                android:text="@string/form_sign_in_trainer_switch" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/emailLabelTextView"
@@ -131,7 +140,7 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/zipCodeEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/horizontal_layout" />
 
         <EditText
             android:id="@+id/emailEditText"
@@ -179,6 +188,7 @@
             android:id="@+id/passwordConfirmationLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="320dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
             android:text="@string/form_sign_in_password_confirmation_label"
@@ -210,6 +220,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
             android:text="@string/login_sign_up_button"
+            android:background="@drawable/boton_redondo"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

@@ -11,17 +11,24 @@ import androidx.fragment.app.Fragment;
 
 public class EntrenadorFragment extends Fragment {
 
-    private Button createTrainingButton, clientsButton, devicesButton, helpButton;
+    private Button createTrainingButton, trainingButton, clientsButton, devicesButton, helpButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.entrenador_fragment, container, false);
 
         // Inicializar los botones
+        trainingButton = view.findViewById(R.id.trainingButton);
         createTrainingButton = view.findViewById(R.id.createTrainingButton);
         clientsButton = view.findViewById(R.id.clientesButton);
         devicesButton = view.findViewById(R.id.devicesButton);
         helpButton = view.findViewById(R.id.helpButton);
 
+        trainingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), TrainingActivity.class));
+            }
+        });
         createTrainingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
