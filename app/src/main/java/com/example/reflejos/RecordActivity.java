@@ -117,6 +117,7 @@ public class RecordActivity extends AppCompatActivity {
         db.collection("usuarios")
                 .document(emailUser)
                 .collection("historial")
+
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
