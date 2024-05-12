@@ -8,10 +8,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,10 +29,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Objects;
 
-public class RecordActivity extends AppCompatActivity {
+public class ClientActivity extends AppCompatActivity {
 
     //declaración del módulo Authentification de firebase
     private FirebaseAuth mAuth;
@@ -43,12 +45,12 @@ public class RecordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record);
-      
-        //inicializamos la cabecera
+        setContentView(R.layout.activity_client);
+
+        //inicializamos cabecera
         inicializarCabecera();
 
-        //inicializamos la lista
+        //inicializar list view
         inicializarLista();
     }
 
@@ -98,7 +100,7 @@ public class RecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mAuth.signOut();
                 finish();
-                startActivity(new Intent(RecordActivity.this, LoginActivity.class));
+                startActivity(new Intent(ClientActivity.this, LoginActivity.class));
             }
         });
     }
@@ -108,15 +110,13 @@ public class RecordActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.list);
 
         //Creacion de almacen datos
-        //ArrayList<EncapsuladorRecord> datos;
+        //ArrayList<ModeloLista> datos;
         datos = new ArrayList<ModeloLista>();
 
         //Obtenemos email del usuario
         String emailUser = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
         //obtenemos datos de la Base de datos
         db.collection("usuarios")
-                .document(emailUser)
-                .collection("historial")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -124,10 +124,11 @@ public class RecordActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("Firebase Result", document.getId() + " => " + document.getData());
-
-                                datos.add(new ModeloLista(R.drawable.historial, document.getId(),
-                                        "Puntuación: " + Objects.requireNonNull(document.getData().get("puntuacion")).toString(),
-                                        ""));
+                                if (document.getData().get("isTrainer").equals("false")){
+                                    datos.add(new ModeloLista(R.drawable.user, document.getId(),
+                                            "",
+                                            ""));
+                                }
                             }
 
                             //Añadimos adaptador a la lista
@@ -166,4 +167,3 @@ public class RecordActivity extends AppCompatActivity {
                 });
     }
 }
-

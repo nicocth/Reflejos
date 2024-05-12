@@ -7,10 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,7 +23,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class RunTrainingActivity extends AppCompatActivity {
@@ -67,7 +72,7 @@ public class RunTrainingActivity extends AppCompatActivity {
         // Obtener el id del entrenamiento del intent
         idEntrenamiento = bundle.getString("idEntrenamiento");
 
-        // Obtener datos del entrenaiento desde la BD
+        // Obtener datos del entrenamiento desde la BD
         obtenerDatosEntrenamiento();
 
         tiempoRestante = tiempoEstablecido;
@@ -239,6 +244,28 @@ public class RunTrainingActivity extends AppCompatActivity {
                     temporizadorFuncionando = false;
                     // Obtener la fecha y hora actual
                     fechaHoraRegistro = new Date();
+
+                    //Obtenemos email del usuario
+                    String emailUser = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+                    Map<String, Object> record = new HashMap<>();
+                    record.put("fecha", fechaHoraRegistro);
+                    record.put("puntuacion", score);
+
+                    db.collection("usuarios").document(emailUser).collection("historial").document(idEntrenamiento+ " " + fechaHoraRegistro)
+                            .set(record)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("Firestore", "DocumentSnapshot successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("Firestore", "Error writing document", e);
+                                }
+                            });
+
                     // Mostrar la fecha y hora en Logcat
                     Log.d("[ FechaHoraReg ]", " -> La fecha y hora del registro es: " + fechaHoraRegistro.toString());
                     // Mostrar la puntuación obtenida en Logcat
@@ -250,6 +277,8 @@ public class RunTrainingActivity extends AppCompatActivity {
                     // Poner a 0 la puntuación
                     textViewScore.setText("0");
                     score = 0;
+
+                    Toast.makeText(RunTrainingActivity.this, "Entrenamiento finalizado.", Toast.LENGTH_SHORT).show();
                 }
             }.start();
 
