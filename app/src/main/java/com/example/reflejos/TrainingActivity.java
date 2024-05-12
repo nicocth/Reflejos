@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Objects;
 
 public class TrainingActivity extends AppCompatActivity {
@@ -33,6 +35,7 @@ public class TrainingActivity extends AppCompatActivity {
 
     //declaramos array para inicializar la lista
     private ArrayList<ModeloLista> datos;
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,8 +162,12 @@ public class TrainingActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(AdapterView<?> pariente, View view, int posicion, long id) {
                                     ModeloLista elegido=(ModeloLista)pariente.getItemAtPosition(posicion);
-                                    //extrae el texto de ese elemento
-                                    CharSequence textoelegido = "Seleccionado: " + elegido.get_texto1();
+                                    // Crear Intent para transicionar a la actividad RunTrainingActivity
+                                    Intent intent = new Intent(getApplicationContext(), RunTrainingActivity.class);
+                                    // Añadir datos extras al Intent -> textoTitulo = document.getId()
+                                    intent.putExtra("idEntrenamiento", elegido.get_textoTitulo());
+                                    // Iniciar la actividad definida en el Intent: RunTrainingActivity
+                                    startActivity(intent);
                                 }
                             });
 
@@ -171,9 +178,3 @@ public class TrainingActivity extends AppCompatActivity {
                 });
     }
 }
-
-
-
-
-
-

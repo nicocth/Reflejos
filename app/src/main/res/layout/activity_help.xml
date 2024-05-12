@@ -8,6 +8,7 @@
     tools:context=".HelpActivity">
 
     <include layout="@layout/header_layout"
+
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
