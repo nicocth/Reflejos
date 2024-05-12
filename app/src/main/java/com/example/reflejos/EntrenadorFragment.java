@@ -38,8 +38,8 @@ public class EntrenadorFragment extends Fragment {
 
         clientsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ClientsActivity.class));
+            public void onClick(View v) {           
+                startActivity(new Intent(getActivity(), ClientActivity.class));
             }
         });
 
