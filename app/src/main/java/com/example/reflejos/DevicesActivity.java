@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import android.Manifest;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -55,7 +59,7 @@ public class DevicesActivity extends AppCompatActivity {
     private ListView listView;
 
 
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +128,7 @@ public class DevicesActivity extends AppCompatActivity {
         });
     }
 
-    private void configurarVista(){
+    private void configurarVista() {
         searchButton = findViewById(R.id.searchButton);
         listView = findViewById(R.id.devicesList);
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, devicesList);
@@ -138,6 +142,7 @@ public class DevicesActivity extends AppCompatActivity {
 
     /** Método que comprueba si tiene permisos para usar bluetooth en el dispositivo y
      * si no los tiene, los pide al usuario */
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void solicitarPermisos() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.BLUETOOTH_SCAN}, REQUEST_BLUETOOTH_PERMISSION);
@@ -156,12 +161,32 @@ public class DevicesActivity extends AppCompatActivity {
         }
         if (!bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
     }
 
     // Método que descubre dispositivos y los añade a la lista
     private void buscarDispositivos() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         bluetoothAdapter.startDiscovery();
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, intentFilter);
@@ -185,6 +210,16 @@ public class DevicesActivity extends AppCompatActivity {
     // Añade los dispositivos conectados y los encontrados por el receiver a la lista.
     private void actualizarLista() {
         devicesList.clear();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         Set<BluetoothDevice> dispositivosConectados = bluetoothAdapter.getBondedDevices();
         for (BluetoothDevice device : dispositivosConectados) {
             devicesList.add(device.getName() + "\nConectado");
@@ -199,7 +234,8 @@ public class DevicesActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(receiver);
+        //Crea error al salir de la activity por no poder escribir en el archivo .log correspondiente.
+        //unregisterReceiver(receiver);
     }
 
 }
