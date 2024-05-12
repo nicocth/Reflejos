@@ -116,7 +116,7 @@ public class RecordActivity extends AppCompatActivity {
         //obtenemos datos de la Base de datos
         db.collection("usuarios")
                 .document(emailUser)
-                .collection("entrenamientos")
+                .collection("historial")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -124,11 +124,10 @@ public class RecordActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("Firebase Result", document.getId() + " => " + document.getData());
-                                List<Number> secuencia = (List<Number>) document.get("secuencia");
 
                                 datos.add(new ModeloLista(R.drawable.historial, document.getId(),
-                                        "Numero de pasos " + secuencia.size(),
-                                        "Tiempo: " + Objects.requireNonNull(document.getData().get("tiempo")).toString()));
+                                        "Puntuación: " + Objects.requireNonNull(document.getData().get("puntuacion")).toString(),
+                                        ""));
                             }
 
                             //Añadimos adaptador a la lista
