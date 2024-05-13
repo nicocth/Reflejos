@@ -241,4 +241,5 @@ public class DevicesActivity extends AppCompatActivity {
         //Crea error al salir de la activity por no poder escribir en el archivo .log correspondiente.
         //unregisterReceiver(receiver);
     }
+
 }
