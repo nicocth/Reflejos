@@ -60,7 +60,6 @@ public class DevicesActivity extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,9 +74,6 @@ public class DevicesActivity extends AppCompatActivity {
         actualizarLista();
         // inicialización de cabecera
         inicializarCabecera();
-
-        //inicializar list view
-        inicializarLista();
     }
 
 

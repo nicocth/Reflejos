@@ -25,8 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ListView
-        android:id="@+id/list"
-
+        android:id="@+id/devicesList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#CCCCCC"
